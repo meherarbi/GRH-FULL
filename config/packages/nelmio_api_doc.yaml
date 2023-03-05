@@ -1,0 +1,14 @@
+nelmio_api_doc:
+    areas:
+        default:
+            path_patterns: ['/api']
+            host_patterns: ['^api\.']
+            documentation:
+                info:
+                    title: My API
+                    description: My API description
+                securityDefinitions:
+                    # Define your security definitions here
+                # Define your additional Swagger/OpenAPI documentation here
+    models:
+        # Define your models here
