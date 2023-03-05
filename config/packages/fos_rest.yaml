@@ -1,0 +1,8 @@
+fos_rest:
+    format_listener:
+        rules:
+            - { path: '^/api', priorities: ['jsonld'], fallback_format: 'json' }
+    view:
+        view_response_listener: 'force'
+        mime_types:
+            json: ['application/json', 'application/ld+json']
