@@ -10,7 +10,10 @@ import { ProductDetailComponent } from './product-detail/product-detail.componen
 import { ProductEditComponent } from './product-edit/product-edit.component';
 import { ProductDeleteComponent } from './product-delete/product-delete.component';
 import { FormsModule } from '@angular/forms';
+<<<<<<< HEAD
 import { LoginComponent } from './login/login.component';
+=======
+>>>>>>> 27e8e5edcef4143a3949e6cf63b999527986ada4
 
 @NgModule({
   declarations: [
@@ -19,8 +22,12 @@ import { LoginComponent } from './login/login.component';
     ProductCreateComponent,
     ProductDetailComponent,
     ProductEditComponent,
+<<<<<<< HEAD
     ProductDeleteComponent,
     LoginComponent
+=======
+    ProductDeleteComponent
+>>>>>>> 27e8e5edcef4143a3949e6cf63b999527986ada4
   ],
   imports: [
     BrowserModule,
