@@ -5,15 +5,25 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ProductListComponent } from './product-list/product-list.component';
 import { HttpClientModule } from '@angular/common/http';
+import { ProductCreateComponent } from './product-create/product-create.component';
+import { ProductDetailComponent } from './product-detail/product-detail.component';
+import { ProductEditComponent } from './product-edit/product-edit.component';
+import { ProductDeleteComponent } from './product-delete/product-delete.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ProductListComponent
+    ProductListComponent,
+    ProductCreateComponent,
+    ProductDetailComponent,
+    ProductEditComponent,
+    ProductDeleteComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule, HttpClientModule
+    AppRoutingModule, HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
