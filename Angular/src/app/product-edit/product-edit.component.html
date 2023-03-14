@@ -1,0 +1,17 @@
+<h1>Edit Product</h1>
+
+<form (ngSubmit)="onSubmit()" *ngIf="product">
+  <div class="form-group">
+    <label for="name">Name</label>
+    <input type="text" class="form-control" id="name" name="name" [(ngModel)]="product.name" required>
+  </div>
+  <div class="form-group">
+    <label for="description">Description</label>
+    <textarea class="form-control" id="description" name="description" [(ngModel)]="product.description"></textarea>
+  </div>
+  <div class="form-group">
+    <label for="price">Price</label>
+    <input type="number" class="form-control" id="price" name="price" [(ngModel)]="product.price" required>
+  </div>
+  <button type="submit" class="btn btn-primary">Save</button>
+</form>

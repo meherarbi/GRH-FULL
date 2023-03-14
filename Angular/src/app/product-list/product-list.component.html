@@ -1,5 +1,30 @@
+<h1>List of products</h1>
 
-<h1>Product List</h1>
-<ul>
-    <li *ngFor="let product of products">{{product.name}}</li>
-</ul>
+<a routerLink="/products/create" class="btn btn-primary">Add new product</a>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Price</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let product of products">
+      <td>{{ product.id }}</td>
+      <td>{{ product.name }}</td>
+      <td>{{ product.description }}</td>
+      <td>{{ product.price }}</td>
+      <td>
+        <a routerLink="/products/{{ product.id }}" class="btn btn-sm btn-primary">View</a>
+        <a routerLink="/products/{{ product.id }}/edit" class="btn btn-sm btn-success">Edit</a>
+        <a routerLink="/products" class="btn btn-sm btn-danger"
+        (click)="confirmDelete(product)">Delete</a>
+            </td>
+    </tr>
+  </tbody>
+</table>
+

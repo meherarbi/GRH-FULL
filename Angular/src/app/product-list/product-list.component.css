@@ -1,0 +1,15 @@
+table {
+  margin-top: 1rem;
+}
+
+th {
+  text-align: center;
+}
+
+td {
+  vertical-align: middle;
+}
+
+.btn-sm {
+  margin-right: 0.5rem;
+}
