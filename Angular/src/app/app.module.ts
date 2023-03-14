@@ -10,7 +10,6 @@ import { ProductDetailComponent } from './product-detail/product-detail.componen
 import { ProductEditComponent } from './product-edit/product-edit.component';
 import { ProductDeleteComponent } from './product-delete/product-delete.component';
 import { FormsModule } from '@angular/forms';
-
 import { LoginComponent } from './login/login.component';
 
 
