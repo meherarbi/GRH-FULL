@@ -1,1 +1,34 @@
 /* You can add global styles to this file, and also import other style files */
+.dark-theme {
+    background-color: #222;
+    color: #fff;
+  }
+  
+  /* Styles for dark theme */
+.dark-theme {
+    background-color: #222;
+    color: #fff;
+  }
+  
+  .dark-theme th,
+  .dark-theme td {
+    border-color: #555;
+    color: #fff;
+  }
+  .dark-theme th {
+    background-color: blue;
+    color: white;
+  }
+  .dark-mode tr.tab {
+    background-color: blue;
+    color: white;
+  }
+  
+  .dark-theme tr:nth-child(even) {
+    background-color: #333;
+  }
+  
+  .dark-theme a {
+    color: #00a7d0;
+  }
+  

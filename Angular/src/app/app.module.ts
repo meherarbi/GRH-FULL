@@ -12,7 +12,8 @@ import { ProductListComponent } from './components/product/product-list/product-
 import { ProductDetailComponent } from './components/product/product-detail/product-detail.component';
 import { ProductEditComponent } from './components/product/product-edit/product-edit.component';
 import { UserComponent } from './components/user/user.component';
-import { ThemeSwitcherComponent } from './components/Theme/theme-switcher/theme-switcher.component';
+import { ThemeSwitcherComponent } from './components/theme-switcher/theme-switcher.component';
+
 
 @NgModule({
   declarations: [
