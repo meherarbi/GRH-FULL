@@ -1,22 +1,23 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ProductCreateComponent } from './product-create/product-create.component';
-import { ProductDeleteComponent } from './product-delete/product-delete.component';
-import { ProductDetailComponent } from './product-detail/product-detail.component';
-import { ProductEditComponent } from './product-edit/product-edit.component';
-import { ProductListComponent } from './product-list/product-list.component';
+import { ProductCreateComponent } from './components/product/product-create/product-create.component';
+import { ProductDetailComponent } from './components/product/product-detail/product-detail.component';
+import { ProductEditComponent } from './components/product/product-edit/product-edit.component';
+import { ProductListComponent } from './components/product/product-list/product-list.component';
+import { UserComponent } from './components/user/user.component';
+
 
 const routes: Routes = [
-    { path: '', component: ProductListComponent },
-    { path: 'products', component: ProductListComponent },
-    { path: 'products/create', component: ProductCreateComponent },
-    { path: 'products/:id', component: ProductDetailComponent },
-    { path: 'products/:id/edit', component: ProductEditComponent },
-    { path: 'products/:id/delete', component: ProductDeleteComponent },
-  ];
+  { path: '', component: ProductListComponent },
+  { path: 'products', component: ProductListComponent },
+  { path: 'products/create', component: ProductCreateComponent },
+  { path: 'products/:id', component: ProductDetailComponent },
+  { path: 'products/:id/edit', component: ProductEditComponent },
+  { path: 'users', component: UserComponent },
+];
 
 @NgModule({
-    imports: [RouterModule.forRoot(routes)],
-    exports: [RouterModule]
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
