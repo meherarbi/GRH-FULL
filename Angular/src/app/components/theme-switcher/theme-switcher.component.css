@@ -1,0 +1,31 @@
+.form-check-label {
+    display: flex;
+    justify-content: flex-end;
+  
+  }
+  
+  .switch-container {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+  }
+  
+  .moon-icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 5px;
+  }
+  
+  .switch-text {
+    font-size: 14px;
+    font-weight: bold;
+  }
+  .form-check-input{
+margin-right: 10px;
+float: right;
+  position: relative;
+
+  } 
+  .form-check-label span {
+    margin-top: 24px;
+  } 
