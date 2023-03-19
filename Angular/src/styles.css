@@ -9,12 +9,22 @@
     background-color: #222;
     color: #fff;
   }
+  th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+  }
   
   .dark-theme th,
   .dark-theme td {
     border-color: #555;
     color: #fff;
   }
+
+  .table-striped>tbody>tr:nth-of-type(odd)>* {
+    --bs-table-accent-bg: var(--bs-table-striped-bg);
+    color: #fff;
+}
   .dark-theme th {
     background-color: blue;
     color: white;
