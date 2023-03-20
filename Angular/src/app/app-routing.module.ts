@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { HomeComponent } from './components/home/home.component';
+import { LoginComponent } from './components/login/login.component';
 import { ProductCreateComponent } from './components/product/product-create/product-create.component';
 import { ProductDetailComponent } from './components/product/product-detail/product-detail.component';
 import { ProductEditComponent } from './components/product/product-edit/product-edit.component';
@@ -14,10 +16,13 @@ const routes: Routes = [
   { path: 'products/:id', component: ProductDetailComponent },
   { path: 'products/:id/edit', component: ProductEditComponent },
   { path: 'users', component: UserComponent },
+  { path: 'login', component: LoginComponent},
+  { path: 'home', component:HomeComponent},
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule],
+
+exports: [RouterModule],
 })
 export class AppRoutingModule {}
