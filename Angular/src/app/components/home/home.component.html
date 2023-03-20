@@ -1,0 +1,11 @@
+<div class="container">
+    <h1>Welcome to our website!</h1>
+    <p>You are logged in as: <span>{{ username }}</span></p>
+    <button (click)="authService.logout()">Déconnexion</button>
+    <nav>
+        <ul>
+          <li><a routerLink="/products">Produits</a></li>
+          <li><a routerLink="/users">Users</a></li>
+        </ul>
+      </nav>
+  </div>
