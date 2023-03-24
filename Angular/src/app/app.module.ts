@@ -17,6 +17,9 @@ import { JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HomeComponent } from './components/home/home.component';
+import { environment } from 'src/environments/environment';
+import { RegisterComponent } from './components/register/register.component';
+import { TokenInterceptor } from './TokenInterceptor';
 
 
 export function jwtOptionsFactory() {
@@ -24,8 +27,8 @@ export function jwtOptionsFactory() {
     tokenGetter: () => {
       return localStorage.getItem('access_token');
     },
-    allowedDomains: ['localhost:8000'],
-    disallowedRoutes: ['localhost:8000/api/login'],
+    allowedDomains: [environment.Domain], 
+    disallowedRoutes: [`${environment.apiURL}/login`], 
   };
 }
 @NgModule({
@@ -40,16 +43,17 @@ export function jwtOptionsFactory() {
     UserComponent,
     ThemeSwitcherComponent,
     HomeComponent,
+    RegisterComponent,
   ],
   imports: [BrowserModule, ReactiveFormsModule , AppRoutingModule, HttpClientModule, 
-    FormsModule,JwtModule.forRoot({
+  FormsModule,JwtModule.forRoot({
       jwtOptionsProvider: {
         provide: JWT_OPTIONS,
         useFactory: jwtOptionsFactory,
       },
     }),],
   exports: [HttpClientModule, JwtModule],
-  providers: [],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
