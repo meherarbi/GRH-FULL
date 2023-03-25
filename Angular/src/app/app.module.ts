@@ -20,6 +20,9 @@ import { HomeComponent } from './components/home/home.component';
 import { environment } from 'src/environments/environment';
 import { RegisterComponent } from './components/register/register.component';
 import { TokenInterceptor } from './TokenInterceptor';
+import { FileUploadModule } from 'ng2-file-upload';
+import { UploadComponent } from './components/upload/upload.component';
+
 
 
 export function jwtOptionsFactory() {
@@ -44,8 +47,9 @@ export function jwtOptionsFactory() {
     ThemeSwitcherComponent,
     HomeComponent,
     RegisterComponent,
+    UploadComponent,
   ],
-  imports: [BrowserModule, ReactiveFormsModule , AppRoutingModule, HttpClientModule, 
+  imports: [BrowserModule, ReactiveFormsModule ,FileUploadModule, AppRoutingModule, HttpClientModule, 
   FormsModule,JwtModule.forRoot({
       jwtOptionsProvider: {
         provide: JWT_OPTIONS,
