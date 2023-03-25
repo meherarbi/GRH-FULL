@@ -1,0 +1,19 @@
+<h1>Upload de fichier</h1>
+
+<form (submit)="onSubmit()">
+  <div>
+    <label for="file">Fichier :</label>
+    <input type="file" id="file" name="file" (change)="onFileSelected($event)" ng2FileSelect [uploader]="uploader" />
+  </div>
+  <button type="submit" >Envoyer</button>
+</form>
+
+<p *ngIf="message && fileSize <= 5000000" class="success-message">{{ message }}</p>
+<p *ngIf="message && fileSize > 5000000" class="error-message">{{ message }}</p>
+
+
+<div *ngIf="fileName">
+  <h2>{{ fileName }}</h2>
+  <img [src]="getIconPath(getFileExtension(fileName))" alt="File icon" width="50">
+</div>
+
