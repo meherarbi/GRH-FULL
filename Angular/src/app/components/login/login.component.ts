@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
   }
 
   private login(formData: LoginFormData) {
-    this.authService.login(formData.email, formData.password).subscribe(
+    this.authService.login(formData.id,formData.email, formData.password).subscribe(
       (response) => {
         const token = response.token;
         localStorage.setItem('access_token', token);

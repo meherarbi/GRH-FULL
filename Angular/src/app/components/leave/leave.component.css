@@ -1,0 +1,37 @@
+.leave-form {
+    background-color: #f5f5f5;
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .leave-form label {
+    display: block;
+    margin-bottom: 10px;
+  }
+  
+  .leave-form input[type="text"],
+  .leave-form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+    font-size: 16px;
+  }
+  
+  .leave-form button[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .leave-form button[type="submit"]:hover {
+    background-color: #45a049;
+  }
+  

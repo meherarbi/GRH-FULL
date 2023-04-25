@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
+import { LeaveFormComponent } from './components/leave/leave-create/leave-form/leave-form.component';
+import { LeaveComponent } from './components/leave/leave.component';
 import { LoginComponent } from './components/login/login.component';
 import { ProductCreateComponent } from './components/product/product-create/product-create.component';
 import { ProductDetailComponent } from './components/product/product-detail/product-detail.component';
@@ -12,7 +14,8 @@ import { UserComponent } from './components/user/user.component';
 
 
 const routes: Routes = [
-  { path: '', component: ProductListComponent },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: 'home', component:HomeComponent},
   { path: 'products', component: ProductListComponent },
   { path: 'products/create', component: ProductCreateComponent },
   { path: 'products/:id', component: ProductDetailComponent },
@@ -20,9 +23,10 @@ const routes: Routes = [
   { path: 'users', component: UserComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent},
-  { path: 'home', component:HomeComponent},
   { path: 'upload', component:UploadComponent},
-];
+  { path: 'leave', component:LeaveComponent},
+  { path: 'leave-form', component:LeaveFormComponent},
+  ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

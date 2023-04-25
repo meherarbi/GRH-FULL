@@ -1,0 +1,29 @@
+.container {
+    margin-top: 20px;
+    }
+    
+    .form-group label {
+    font-weight: bold;
+    }
+    
+    .form-control {
+    border-radius: 0;
+    }
+    
+    .btn-primary {
+    margin-top: 10px;
+    }
+    
+    .col-md-6 {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    }
+    
+    .form-control:invalid {
+    border-color: red;
+    }
+    
+    .form-control:focus:invalid {
+    box-shadow: none;
+    }

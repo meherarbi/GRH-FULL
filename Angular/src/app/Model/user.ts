@@ -3,4 +3,8 @@ export interface User {
     email: string;
     roles: string[];
     password?: string;
+    firstName?: string;
+    lastName?: string;
+    address?: string;
+    phoneNumber?: string;
     }

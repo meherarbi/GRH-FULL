@@ -22,6 +22,9 @@ import { RegisterComponent } from './components/register/register.component';
 import { TokenInterceptor } from './TokenInterceptor';
 import { FileUploadModule } from 'ng2-file-upload';
 import { UploadComponent } from './components/upload/upload.component';
+import { LeaveComponent } from './components/leave/leave.component';
+import { LeaveFormComponent } from './components/leave/leave-create/leave-form/leave-form.component';
+
 
 
 
@@ -48,9 +51,12 @@ export function jwtOptionsFactory() {
     HomeComponent,
     RegisterComponent,
     UploadComponent,
+    LeaveComponent,
+    LeaveFormComponent
+    
   ],
   imports: [BrowserModule, ReactiveFormsModule ,FileUploadModule, AppRoutingModule, HttpClientModule, 
-  FormsModule,JwtModule.forRoot({
+FormsModule,JwtModule.forRoot({
       jwtOptionsProvider: {
         provide: JWT_OPTIONS,
         useFactory: jwtOptionsFactory,

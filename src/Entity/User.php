@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use ApiPlatform\Metadata\ApiResource;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -19,7 +21,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
-    private ?string $email = null;
+    private ?string $email ;
 
     #[ORM\Column]
     private array $roles = [];
@@ -30,7 +32,27 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(nullable: true)]
     private ?string $password = null;
 
-    #[ORM\Column(length: 255 ,nullable: true)]
+    #[ORM\Column(nullable: true)]
+    private ?string $firstName = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?string $lastName = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?string $address = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?string $phoneNumber = null;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Leave::class)]
+    private Collection $leaves;
+
+    public function __construct()
+    {
+        $this->leaves = new ArrayCollection();
+    }
+
+  
    
     public function getId(): ?int
     {
@@ -102,5 +124,85 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
+    public function getFirstName(): ?string
+    {
+        return $this->firstName;
+    }
+
+    public function setFirstName(string $firstName): self
+    {
+        $this->firstName = $firstName;
+
+        return $this;
+    }
+
+    // Getter et Setter pour le champ $lastName
+    public function getLastName(): ?string
+    {
+        return $this->lastName;
+    }
+
+    public function setLastName(string $lastName): self
+    {
+        $this->lastName = $lastName;
+
+        return $this;
+    }
+
+    // Getter et Setter pour le champ $address
+    public function getAddress(): ?string
+    {
+        return $this->address;
+    }
+
+    public function setAddress(string $address): self
+    {
+        $this->address = $address;
+
+        return $this;
+    }
+
+    // Getter et Setter pour le champ $phoneNumber
+    public function getPhoneNumber(): ?string
+    {
+        return $this->phoneNumber;
+    }
+
+    public function setPhoneNumber(string $phoneNumber): self
+    {
+        $this->phoneNumber = $phoneNumber;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Leave>
+     */
+    public function getLeaves(): Collection
+    {
+        return $this->leaves;
+    }
+
+    public function addLeaf(Leave $leaf): self
+    {
+        if (!$this->leaves->contains($leaf)) {
+            $this->leaves->add($leaf);
+            $leaf->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLeaf(Leave $leaf): self
+    {
+        if ($this->leaves->removeElement($leaf)) {
+            // set the owning side to null (unless already changed)
+            if ($leaf->getUser() === $this) {
+                $leaf->setUser(null);
+            }
+        }
+
+        return $this;
+    }
     
 }
