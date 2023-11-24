@@ -26,24 +26,24 @@ export class LeaveFormComponent {
   }
 
   onSubmit() {
-    const selectedUser = this.users.find(user => user.id === Number(this.selectedUserId));
-    
-  
     const data = {
-      userId: this.selectedUserId, 
-      firstName: this.firstName,
+      // userId: Number(this.selectedUserId), // Si nécessaire
       startDate: this.startDate,
       endDate: this.endDate,
       type: this.type,
       comment: this.comment,
     };
   
-    this.http
-      .post('https://localhost:8000/api/create', data)
-      .subscribe((response) => {
+    this.http.post('https://localhost:8000/api/create', data).subscribe(
+      (response) => {
         console.log(response);
         this.router.navigate(['/leave']);
-      });
+      },
+      (error) => {
+        console.error('Erreur lors de lenvoi des données', error);
+      }
+    );
   }
+  
   
 }
