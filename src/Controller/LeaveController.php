@@ -33,15 +33,24 @@ class LeaveController extends AbstractController
             return new JsonResponse(['error' => 'User not authenticated'], Response::HTTP_UNAUTHORIZED);
         }
     
+        // Vérifier si l'utilisateur est un administrateur
+        if (in_array('ROLE_ADMIN', $user->getRoles())) {
+            // L'utilisateur est administrateur, récupérer toutes les demandes de congé
+            $leaves = $this->entityManager->getRepository(Leave::class)->findAll();
+        } else {
+            // Utilisateur non-administrateur, récupérer seulement ses demandes de congé
+            $leaves = $this->entityManager->getRepository(Leave::class)
+                        ->findBy(['user' => $user]);
+        }
+    
+        // Ajouter la pagination si nécessaire
         $page = (int) $request->query->get('page', 1);
         $limit = (int) $request->query->get('limit', 500);
-    
-        // Récupérer les congés de l'utilisateur connecté
-        $leave = $this->entityManager->getRepository(Leave::class)
-            ->findBy(['user' => $user], null, $limit, ($page - 1) * $limit);
+        // Appliquer la pagination aux données récupérées si nécessaire
+        
     
         $data = [
-            'leave' => $leave,
+            'leave' => $leaves, // Utiliser la variable $leaves
             'page' => $page,
             'limit' => $limit,
         ];
@@ -49,24 +58,27 @@ class LeaveController extends AbstractController
         return $this->json($data);
     }
     
+    
     #[Route('/create', name: 'create_leave')]
-    public function create(Request $request, UserRepository $userRepository, LeaveRepository $leaveRepository): JsonResponse
-    {
-        $requestData = json_decode($request->getContent(), true);
-
-        // Vérifier que la clé 'userId' est définie dans la requête
-        if (!isset($requestData['userId'])) {
-            return new JsonResponse(['error' => 'userId is missing'], Response::HTTP_BAD_REQUEST);
+    public function create(Request $request, LeaveRepository $leaveRepository): JsonResponse {
+        $user = $this->getUser(); // Récupérer l'utilisateur connecté
+    
+        // Vérifier si l'utilisateur est connecté
+        if (!$user) {
+            return new JsonResponse(['error' => 'User not authenticated'], Response::HTTP_UNAUTHORIZED);
         }
 
-        $user = $userRepository->find($requestData['userId']);
+        
+    
+        $requestData = json_decode($request->getContent(), true);
+        
         $startDate = new \DateTime($requestData['startDate']);
         $endDate = new \DateTime($requestData['endDate']);
         $type = $requestData['type'];
         $comment = $requestData['comment'];
-
+        
         $leave = $leaveRepository->createLeave($user, $startDate, $endDate, $type, $comment);
-
+        
         $response = new JsonResponse([
             'id' => $leave->getId(),
             'startDate' => $leave->getStartDate()->format('Y-m-d'),
@@ -74,16 +86,19 @@ class LeaveController extends AbstractController
             'type' => $leave->getType(),
             'comment' => $leave->getComment(),
             'user' => [
-                'id' => $leave->getUser()->getId(),
-                'email' => $leave->getUser()->getEmail(),
-                'roles' => $leave->getUser()->getRoles(),
+                'id' => $user->getId(),
+                'firstName' => $user->getFirstName(), 
+                'lastName' => $user->getLastName(),
+                'email' => $user->getEmail(),
+                'roles' => $user->getRoles(),
             ],
         ]);
-
+        
         $response->setEncodingOptions(JSON_UNESCAPED_UNICODE);
-
+        
         return $response;
     }
+    
 
     #[Route('/leave/{id}', name: 'update_leave', methods: ['PUT'])]
     public function update(int $id, Request $request, LeaveRepository $leaveRepository, UserRepository $userRepository): JsonResponse
