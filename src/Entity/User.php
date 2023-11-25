@@ -47,9 +47,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Leave::class)]
     private Collection $leaves;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: TimeSheet::class)]
+    private Collection $timeSheets;
+
     public function __construct()
     {
         $this->leaves = new ArrayCollection();
+        $this->timeSheets = new ArrayCollection();
     }
 
   
