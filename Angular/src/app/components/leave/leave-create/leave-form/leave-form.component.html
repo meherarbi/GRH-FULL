@@ -1,5 +1,5 @@
 <form (ngSubmit)="onSubmit()" #leaveForm="ngForm">
-  <div class="form-group">
+ <!--  <div class="form-group">
     <label for="userId">User</label>
     <select class="form-control" id="userId" [(ngModel)]="selectedUserId" name="userId" required>
       <option *ngFor="let user of users" [value]="user.id">{{ user.email }}</option>
@@ -8,7 +8,7 @@
   <div class="form-group">
     <label for="firstName">First Name</label>
     <input type="text" class="form-control" id="firstName" [(ngModel)]="firstName" name="firstName" required>
-  </div>
+  </div> -->
   <div class="form-group">
     <label for="startDate">Start Date</label>
     <input type="date" class="form-control" id="startDate" [(ngModel)]="startDate" name="startDate" required>

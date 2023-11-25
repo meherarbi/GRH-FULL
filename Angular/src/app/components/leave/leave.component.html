@@ -16,7 +16,7 @@
       <td>{{ leave.endDate }}</td>
       <td>{{ leave.type }}</td>
       <td>{{ leave.comment }}</td>
-      <td>{{ leave.user}}</td>
+      <td>{{ leave.userDetails?.firstName }} {{ leave.userDetails?.lastName }}</td>
     </tr>
     <tr *ngIf="leaves.length === 0">
       <td colspan="6">No leaves found.</td>

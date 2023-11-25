@@ -33,4 +33,8 @@ export class UserService {
    
   }
   
+  getUserByUrl(url: string): Observable<any> {
+    return this.http.get(`https://localhost:8000${url}`);
+  }
+  
 }
