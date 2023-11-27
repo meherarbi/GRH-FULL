@@ -9,6 +9,8 @@ import { ProductDetailComponent } from './components/product/product-detail/prod
 import { ProductEditComponent } from './components/product/product-edit/product-edit.component';
 import { ProductListComponent } from './components/product/product-list/product-list.component';
 import { RegisterComponent } from './components/register/register.component';
+import { TimeSheetListComponent } from './components/time-sheet-list/time-sheet-list.component';
+import { TimesheetFormComponent } from './components/timesheet-form/timesheet-form.component';
 import { UploadComponent } from './components/upload/upload.component';
 import { UserComponent } from './components/user/user.component';
 
@@ -26,10 +28,13 @@ const routes: Routes = [
   { path: 'upload', component:UploadComponent},
   { path: 'leave', component:LeaveComponent},
   { path: 'leave-form', component:LeaveFormComponent},
+  { path: 'timesheet', component:TimeSheetListComponent},
+  { path: 'timesheet-form', component:TimesheetFormComponent},
   ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
+
 
 exports: [RouterModule],
 })

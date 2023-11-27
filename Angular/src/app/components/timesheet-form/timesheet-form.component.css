@@ -1,0 +1,45 @@
+form {
+    background: rgb(122, 101, 197);
+    padding: 20px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    max-width: 500px;
+    margin: 30px auto;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input[type="date"],
+input[type="number"],
+input[type="text"],
+textarea,
+select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+input[type="submit"] {
+    background-color: #009879;
+    color: rgb(76, 14, 245);
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+input[type="submit"]:hover {
+    background-color: #007f66;
+}
+
+textarea {
+    resize: vertical;
+}

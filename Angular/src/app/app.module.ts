@@ -14,7 +14,7 @@ import { ProductEditComponent } from './components/product/product-edit/product-
 import { UserComponent } from './components/user/user.component';
 import { ThemeSwitcherComponent } from './components/theme-switcher/theme-switcher.component';
 import { JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
-import { BrowserModule } from '@angular/platform-browser';
+
 import { ReactiveFormsModule } from '@angular/forms';
 import { HomeComponent } from './components/home/home.component';
 import { environment } from 'src/environments/environment';
@@ -24,6 +24,10 @@ import { FileUploadModule } from 'ng2-file-upload';
 import { UploadComponent } from './components/upload/upload.component';
 import { LeaveComponent } from './components/leave/leave.component';
 import { LeaveFormComponent } from './components/leave/leave-create/leave-form/leave-form.component';
+import { BrowserModule } from '@angular/platform-browser';
+import { TimesheetFormComponent } from './components/timesheet-form/timesheet-form.component';
+import { TimeSheetListComponent } from './components/time-sheet-list/time-sheet-list.component';
+
 
 
 
@@ -52,7 +56,10 @@ export function jwtOptionsFactory() {
     RegisterComponent,
     UploadComponent,
     LeaveComponent,
-    LeaveFormComponent
+    LeaveFormComponent,
+    TimesheetFormComponent,
+    TimeSheetListComponent,
+ 
     
   ],
   imports: [BrowserModule, ReactiveFormsModule ,FileUploadModule, AppRoutingModule, HttpClientModule, 

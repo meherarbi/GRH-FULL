@@ -1,13 +1,17 @@
 <div class="container">
-    <h1>Welcome to our website!</h1>
-    <p>You are logged in as: <span>{{ username }}</span></p>
-    <button (click)="authService.logout()">Déconnexion</button>
-    <nav>
-        <ul>
+  <header class="header">
+      <h1>Welcome to our HR Management System</h1>
+      <p>You are logged in as: <span class="username">{{ username }}</span></p>
+      <button class="logout-btn" (click)="authService.logout()">Déconnexion</button>
+  </header>
+  <nav class="navigation">
+      <ul>
           <li><a routerLink="/products">Projets</a></li>
           <li><a routerLink="/users">Users</a></li>
           <li><a routerLink="/leave">Congés</a></li>
           <li><a routerLink="/leave-form">Creer un congé</a></li>
-        </ul>
-      </nav>
-  </div>
+          <li><a routerLink="/timesheet-form">valider un projet</a></li>
+          <li><a routerLink="/timesheet">Mes projets Validés</a></li>
+      </ul>
+  </nav>
+</div>
