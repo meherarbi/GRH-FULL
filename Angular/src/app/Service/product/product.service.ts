@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { Product } from 'src/app/Model/product';
 import { environment } from 'src/environments/environment';
+import { tap, catchError } from 'rxjs/operators';
+
 
 @Injectable({
   providedIn: 'root',
@@ -15,8 +17,19 @@ export class ProductService {
   }
 
   getProducts(): Observable<Product[]> {
-    return this.http.get<Product[]>(this.apiUrl);
-  }
+    return this.http.get<Product[]>(this.apiUrl).pipe(
+        tap((data: Product[]) => console.log("Réponse de l'API:", data)),
+        catchError((error: any) => {
+            console.error("Erreur lors de la récupération des produits:", error);
+            return throwError(() => new Error('Erreur lors de la récupération des produits'));
+        })
+    );
+}
+
+getProductByUrl(url: string): Observable<any> {
+  return this.http.get(`https://localhost:8000${url}`);
+}
+
   getApiUrl(): string {
     return this.apiUrl;
   }

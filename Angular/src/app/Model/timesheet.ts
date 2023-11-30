@@ -1,4 +1,4 @@
-
+import { Product } from "./product";
 
 export interface TimeSheet {
     id?: number;
@@ -7,5 +7,6 @@ export interface TimeSheet {
     tasks: string;
     comments?: string;
     status: string;
+    product?: { name: string; /* Autres champs du produit si nécessaire */ };
    
 }

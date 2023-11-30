@@ -22,6 +22,11 @@ class TimeSheetRepository extends ServiceEntityRepository
     // Ajoutez ici des méthodes personnalisées si nécessaire
 
     // Par exemple, une méthode pour trouver des feuilles de temps par certains critères
+
+    public function findAllDesc()
+    {
+        return $this->findBy([], ['id' => 'DESC']);
+    }
     public function findByUserAndDate($userId, $startDate, $endDate)
     {
         return $this->createQueryBuilder('t')

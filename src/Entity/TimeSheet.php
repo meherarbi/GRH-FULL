@@ -6,8 +6,11 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Repository\TimeSheetRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Metadata\ApiResource;
 
 #[ORM\Entity(repositoryClass: TimeSheetRepository::class)]
+#[ApiResource()]
 class TimeSheet
 {
     #[ORM\Id]
@@ -33,6 +36,10 @@ class TimeSheet
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'timeSheets')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
+
+    #[ORM\ManyToOne(inversedBy: 'timeSheets')]
+    
+    private ?Product $product = null;
 
     // Getters and Setters
 
@@ -109,6 +116,18 @@ class TimeSheet
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getProduct(): ?Product
+    {
+        return $this->product;
+    }
+
+    public function setProduct(?Product $product): self
+    {
+        $this->product = $product;
 
         return $this;
     }

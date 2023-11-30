@@ -2,7 +2,7 @@
 
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { TimeSheet } from 'src/app/Model/timesheet';
 
 
@@ -17,9 +17,15 @@ export class TimeSheetService {
         return this.http.post<TimeSheet>(this.apiUrl, timesheet);
     }
 
-    getTimeSheets(): Observable<TimeSheet[]> {
+    /* getTimeSheets(): Observable<TimeSheet[]> {
         return this.http.get<TimeSheet[]>(`${this.apiUrl}/list`);
+    } */
+    getTimeSheets(): Observable<TimeSheet[]> {
+        return this.http.get<TimeSheet[]>(`${this.apiUrl}/list`).pipe(
+            tap(data => console.log('Datas from API:', data))
+        );
     }
+    
 
     updateTimeSheet(timesheet: TimeSheet): Observable<TimeSheet> {
         return this.http.put<TimeSheet>(`${this.apiUrl}/edit/${timesheet.id}`, timesheet);
