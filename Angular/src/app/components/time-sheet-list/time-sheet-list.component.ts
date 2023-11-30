@@ -1,49 +1,62 @@
-// src/app/components/time-sheet-list/time-sheet-list.component.ts
-
 import { Component, OnInit } from '@angular/core';
 import { TimeSheet } from 'src/app/Model/timesheet';
+import { ProductService } from 'src/app/Service/product/product.service';
 import { TimeSheetService } from 'src/app/Service/TimeSheet/timesheet.service';
-
 
 @Component({
     selector: 'app-timesheet-list',
     templateUrl: './time-sheet-list.component.html'
 })
 export class TimeSheetListComponent implements OnInit {
-    timeSheets: TimeSheet[] | any;
+    timeSheets: TimeSheet[] | any; // Utilisation d'un type plus strict
 
-    constructor(private timeSheetService: TimeSheetService) {}
+    constructor(private timeSheetService: TimeSheetService,
+        private productService: ProductService) {}
 
     ngOnInit(): void {
+        console.log('ngOnInit called');
         this.loadTimeSheets();
     }
 
     loadTimeSheets(): void {
-        this.timeSheetService.getTimeSheets().subscribe(
-            (data) => {
-                console.log('TimeSheets received:', data);
+        this.timeSheetService.getTimeSheets().subscribe({
+            next: (data) => {
                 this.timeSheets = data;
+                this.timeSheets.forEach((timesheet: any) => {
+                    if (timesheet.product) {
+                        this.productService.getProductByUrl(timesheet.product).subscribe(
+                            (productDetails) => {
+                                timesheet.productDetails = productDetails;
+                            },
+                            (error) => {
+                                console.error('Erreur lors de la récupération des détails du produit', error);
+                            }
+                        );
+                    }
+                });
             },
-            (error) => {
+            error: (error) => {
                 console.error('Error loading time sheets:', error);
             }
-        );
+        });
     }
+    
+    
     
 
     editTimeSheet(timesheet: TimeSheet): void {
         // Logique pour éditer une feuille de temps
         // Cela pourrait impliquer de naviguer vers un formulaire de modification
+        // Exemple: this.router.navigate(['/timesheet/edit', timesheet.id]);
     }
 
     deleteTimeSheet(id: number): void {
         this.timeSheetService.deleteTimeSheet(id).subscribe(
             () => {
-                // Après la suppression, rechargez ou mettez à jour la liste
-                this.loadTimeSheets();
+                this.loadTimeSheets(); // Recharger la liste après la suppression
             },
             (error) => {
-                // Gérer l'erreur
+                console.error('Error deleting time sheet:', error);
             }
         );
     }

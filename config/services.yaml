@@ -23,7 +23,8 @@ services:
             $userPasswordEncoder: '@security.user_password_hasher' 
     App\Service\FileUploader:
         arguments:
-            $uploadsDir: '%env(resolve:UPLOADS_DIR)%'              
+            $uploadsDir: '%env(resolve:UPLOADS_DIR)%' 
+                   
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
