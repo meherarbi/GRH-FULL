@@ -137,9 +137,10 @@ class LeaveController extends AbstractController
     }
 
     #[Route('/leave/{id}', name: 'delete_leave', methods: ['DELETE'])]
-    public function delete(int $id, LeaveRepository $leaveRepository): JsonResponse
+    public function delete(string $id, LeaveRepository $leaveRepository): JsonResponse
     {
-        $leave = $leaveRepository->find($id);
+        $idInt = (int) $id; // Convertir en entier
+    $leave = $leaveRepository->find($idInt);
 
         if (!$leave) {
             return new JsonResponse(['error' => 'Leave not found'], Response::HTTP_NOT_FOUND);

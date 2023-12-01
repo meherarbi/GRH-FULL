@@ -1,4 +1,4 @@
-<table>
+<table >
   <thead>
     <tr>
       <th>ID</th>
@@ -7,20 +7,29 @@
       <th>Type</th>
       <th>Comment</th>
       <th>User</th>
+      <th>Actions</th>
     </tr>
   </thead>
-  <tbody>
+  <tbody class="dark-mode">
     <tr *ngFor="let leave of leaves">
       <td>{{ leave.id }}</td>
-      <td>{{ leave.startDate }}</td>
-      <td>{{ leave.endDate }}</td>
+      <td>{{ leave.startDate | date }}</td>
+      <td>{{ leave.endDate | date }}</td>
       <td>{{ leave.type }}</td>
       <td>{{ leave.comment }}</td>
       <td>{{ leave.userDetails?.firstName }} {{ leave.userDetails?.lastName }}</td>
+      <td>
+        <!-- Boutons ou liens pour éditer/supprimer -->
+        
+        <button (click)="confirmDelete(leave.id)">Delete</button>
+    </td>
     </tr>
     <tr *ngIf="leaves.length === 0">
       <td colspan="6">No leaves found.</td>
     </tr>
+
+    
+
   </tbody>
 </table>
 

@@ -55,15 +55,47 @@ class TimeSheetController extends AbstractController
     }
 
     #[Route('/list', name: 'list_timesheets', methods: ['GET'])]
-    public function list(SerializerInterface $serializer,EntityManagerInterface $entityManager,TimeSheetRepository $timeSheetRepository): JsonResponse
+    public function list(Request $request, TimeSheetRepository $repository): JsonResponse
     {
-        $timeSheets = $entityManager->getRepository(TimeSheet::class)->findAllDesc();;
-       
+        $page = max(1, (int) $request->query->get('page', 1));
+        $limit = max(1, min(50, (int) $request->query->get('limit', 10))); // Limite entre 1 et 50
 
-        return $this->json($timeSheets);
+        $paginator = $repository->getPaginatedTimeSheets($page, $limit);
+        $totalItems = count($paginator);
+        $pagesCount = ceil($totalItems / $limit);
+
+        $timeSheets = [];
+        foreach ($paginator as $timeSheet) {
+            $timeSheets[] = [
+                'id' => $timeSheet->getId(),
+                'date' => $timeSheet->getDate()->format('Y-m-d H:i:s'), // Formatage de la date
+                'hoursWorked' => $timeSheet->getHoursWorked(),
+                'tasks' => $timeSheet->getTasks(),
+                'comments' => $timeSheet->getComments(),
+                'status' => $timeSheet->getStatus(),
+                'user' => [ // Supposons que vous voulez envoyer certaines informations sur l'utilisateur
+                    'id' => $timeSheet->getUser()->getId(),
+                    'email' => $timeSheet->getUser()->getEmail(),
+                    // Ajoutez d'autres champs si nécessaire
+                ],
+                'product' => $timeSheet->getProduct() ? [
+                    'id' => $timeSheet->getProduct()->getId(),
+                    'name' => $timeSheet->getProduct()->getName(),
+                    // Ajoutez d'autres champs du produit si nécessaire
+                ] : null, // Gérer le cas où le produit n'est pas assigné
+            ];
+            
+        }
+
+        return $this->json([
+            'data' => $timeSheets,
+            'totalItems' => $totalItems,
+            'pagesCount' => $pagesCount,
+            'currentPage' => $page,
+        ]);
     }
 
-    #[Route('/edit/{id}', name: 'update_timesheet', methods: ['PUT'])]
+    #[Route('/{id}', name: 'update_timesheet', methods: ['PUT'])]
     public function update(Request $request, TimeSheet $timeSheet, SerializerInterface $serializer, ValidatorInterface $validator, EntityManagerInterface $entityManager): JsonResponse
     {
         $updatedTimeSheet = $serializer->deserialize($request->getContent(), TimeSheet::class, 'json', ['object_to_populate' => $timeSheet]);

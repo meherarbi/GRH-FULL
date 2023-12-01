@@ -27,6 +27,7 @@ import { LeaveFormComponent } from './components/leave/leave-create/leave-form/l
 import { BrowserModule } from '@angular/platform-browser';
 import { TimesheetFormComponent } from './components/timesheet-form/timesheet-form.component';
 import { TimeSheetListComponent } from './components/time-sheet-list/time-sheet-list.component';
+import { EditTimesheetComponent } from './components/time-sheet-list/edit-timesheet/edit-timesheet.component';
 
 
 
@@ -59,6 +60,7 @@ export function jwtOptionsFactory() {
     LeaveFormComponent,
     TimesheetFormComponent,
     TimeSheetListComponent,
+    EditTimesheetComponent,
  
     
   ],

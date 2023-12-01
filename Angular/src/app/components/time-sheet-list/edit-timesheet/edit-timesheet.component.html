@@ -1,0 +1,33 @@
+<!-- edit-timesheet.component.html -->
+<form [formGroup]="timesheetForm" (ngSubmit)="onSubmit()">
+    <div>
+        <label for="date">Date</label>
+        <input type="date" id="date" formControlName="date">
+    </div>
+    <div>
+        <label for="product">Project</label>
+        <select id="product" formControlName="product">
+            <option *ngFor="let product of products" [value]="product.id">{{ product.name }}</option>
+        </select>
+    </div>
+    <div>
+        <label for="hoursWorked">Hours Worked</label>
+        <input type="number" id="hoursWorked" formControlName="hoursWorked">
+    </div>
+    <div>
+        <label for="tasks">Tasks</label>
+        <input type="text" id="tasks" formControlName="tasks">
+    </div>
+    <div>
+        <label for="comments">Comments</label>
+        <textarea id="comments" formControlName="comments"></textarea>
+    </div>
+    <div>
+        <label for="status">Status</label>
+        <select id="status" formControlName="status">
+            <option value="Pending">Pending</option>
+            <option value="Completed">Completed</option>
+        </select>
+    </div>
+    <button type="submit">Submit</button>
+</form>

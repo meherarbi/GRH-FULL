@@ -2,8 +2,8 @@
 
 <div *ngIf="product">
   <p><strong>Name:</strong> {{ product.name }}</p>
-  <p><strong>Description:</strong> {{ product.description }}</p>
-  <p><strong>Price:</strong> {{ product.price }}</p>
+  <!-- <p><strong>Description:</strong> {{ product.description }}</p>
+  <p><strong>Price:</strong> {{ product.price }}</p> -->
   <a routerLink="/products/{{ product.id }}/edit" class="btn btn-primary">Edit</a>
   <a routerLink="/products" class="btn btn-secondary">Back to list</a>
 </div>
