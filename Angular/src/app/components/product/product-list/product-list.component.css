@@ -36,10 +36,12 @@ a,button {
 .header-container {
   display: flex;
   align-items: center;
+  margin-bottom:1% ;
 }
 
 h1 {
-  margin-right: 78%; /* Adjust as needed */
+  margin-right: 85.5%; /* Adjust as needed */
+  font-size:17px
 }
 
 

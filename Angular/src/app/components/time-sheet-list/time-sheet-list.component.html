@@ -1,53 +1,59 @@
 <!-- src/app/components/timesheet-list/timesheet-list.component.html -->
 
-<h2>Time Sheets</h2>
+<div class="container">
 
-<table >
-    <thead>
-        <tr>
-            <th>Start Date</th>
-            <th>Hours Worked</th>
-            <th>Tasks</th>
-            <th>Comments</th>
-            <th>Status</th>
-            <th>Project</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody class="dark-mode">
-        <tr *ngFor="let timesheet of timeSheets">
-            <td>{{ timesheet.date | date }}</td>
-            <td>{{ timesheet.hoursWorked }}</td>
-            <td>{{ timesheet.tasks }}</td>
-            <td>{{ timesheet.comments }}</td>
-            <td>{{ timesheet.status }}</td>
-            <td>{{ timesheet.product?.name }}</td>
-
-
-            <td>
-                <!-- Boutons ou liens pour éditer/supprimer -->
-                <button (click)="editTimeSheet(timesheet)">Edit</button>
-                <button (click)="confirmDelete(timesheet.id)">Delete</button>
-            </td>
-            
-        </tr>
-
-    </tbody>
+    <div class="header-container">
+        <h2>Time Sheets</h2>
+        <a routerLink="/timesheet-form" class="btn btn-primary">Add </a>
+      </div>
+    <table >
+        <thead>
+            <tr>
+                <th>Start Date</th>
+                <th>Hours Worked</th>
+                <th>Tasks</th>
+                <th>Comments</th>
+                <th>Status</th>
+                <th>Project</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody class="dark-mode">
+            <tr *ngFor="let timesheet of timeSheets">
+                <td>{{ timesheet.date | date }}</td>
+                <td>{{ timesheet.hoursWorked }}</td>
+                <td>{{ timesheet.tasks }}</td>
+                <td>{{ timesheet.comments }}</td>
+                <td>{{ timesheet.status }}</td>
+                <td>{{ timesheet.product?.name }}</td>
     
-      
     
-
-</table>
-
-<div class="pagination-container" style="text-align: center; margin-top: 20px;">
-
-    <ul class="pagination">
-        <li class="page-item" [class.disabled]="currentPage === 1">
-          <a class="page-link" (click)="loadTimeSheets(currentPage - 1)">Précédent</a>
-        </li>
-        <!-- Générer des liens pour les numéros de page ici si nécessaire -->
-        <li class="page-item" [class.disabled]="currentPage === totalItems / itemsPerPage">
-          <a class="page-link" (click)="loadTimeSheets(currentPage + 1)">Suivant</a>
-        </li>
-      </ul>
+                <td>
+                    <!-- Boutons ou liens pour éditer/supprimer -->
+                    <!-- <button (click)="editTimeSheet(timesheet)">Edit</button> -->
+                    <button (click)="confirmDelete(timesheet.id)">Delete</button>
+                </td>
+                
+            </tr>
+    
+        </tbody>
+        
+          
+        
+    
+    </table>
+    
+    <div class="pagination-container" style="text-align: center; margin-top: 20px;">
+    
+        <ul class="pagination">
+            <li class="page-item" [class.disabled]="currentPage === 1">
+              <a class="page-link" (click)="loadTimeSheets(currentPage - 1)">Précédent</a>
+            </li>
+            <!-- Générer des liens pour les numéros de page ici si nécessaire -->
+            <li class="page-item" [class.disabled]="currentPage === totalItems / itemsPerPage">
+              <a class="page-link" (click)="loadTimeSheets(currentPage + 1)">Suivant</a>
+            </li>
+          </ul>
+    </div>
+    
 </div>
