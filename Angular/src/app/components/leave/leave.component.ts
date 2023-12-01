@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { LeaveService } from 'src/app/Service/leave/leave.service';
 import { UserService } from 'src/app/Service/user/user.service';
+import { Leave } from 'src/app/Model/leave';
 
 @Component({
   selector: 'app-leave',
@@ -11,6 +12,28 @@ export class LeaveComponent {
   leaves: any;
 
   constructor(private leaveService: LeaveService , private UserService: UserService) { }
+
+
+
+  confirmDelete(id: number): void {
+    const confirmed = window.confirm(`Are you sure you want to delete this leave ?`);
+    if (confirmed) {
+      this.deleteLeave(id); // Ici, passez 'id' directement
+    }
+  }
+  
+  
+
+
+  deleteLeave(id: number): void {
+    this.leaveService.deleteLeave(id).subscribe(
+      () => {
+        this.leaves = this.leaves?.filter((leave: { id: number; }) => leave.id !== id) ?? [];
+        console.log(`Deleted leave with ID ${id}`);
+      },
+      (error) => console.error(error)
+    );
+  }
 
   ngOnInit(): void {
     this.leaveService.getLeaves().subscribe(

@@ -1,23 +1,26 @@
-<h1>List of projects</h1>
+<div class="header-container">
+  <h1>Projects</h1>
+  <a routerLink="/products/create" class="btn btn-primary">Add Project</a>
+</div>
 
-<a routerLink="/products/create" class="btn btn-primary">Add new project</a>
 
-<table class="table table-striped dark-mode">
+
+<table class="dark-mode">
   <thead>
     <tr>
       <th>ID</th>
       <th>Name</th>
-      <th>Description</th>
-      <th>Price</th>
+     <!--  <th>Description</th> -->
+      <!-- <th>Price</th> -->
       <th>Actions</th>
     </tr>
   </thead>
-  <tbody>
+  <tbody class="dark-mode">
     <tr *ngFor="let product of products">
       <td>{{ product.id }}</td>
       <td>{{ product.name }}</td>
-      <td>{{ product.description }}</td>
-      <td>{{ product.price }}</td>
+     <!--  <td>{{ product.description }}</td> -->
+      <!-- <td>{{ product.price }}</td> -->
       <td>
         <a routerLink="/products/{{ product.id }}" class="btn btn-sm btn-primary">View</a>
         <a routerLink="/products/{{ product.id }}/edit" class="btn btn-sm btn-success">Edit</a>

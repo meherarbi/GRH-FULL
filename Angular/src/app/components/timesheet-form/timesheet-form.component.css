@@ -43,3 +43,31 @@ input[type="submit"]:hover {
 textarea {
     resize: vertical;
 }
+
+button {
+    background-color: #009879;
+    color: white;
+    border: none;
+    padding: 10px;
+    margin-right: 10px;
+    margin-top: 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Styles pour le tableau en mode sombre */
+.dark-mode th {
+    background-color: #333; /* Fond plus foncé pour les en-têtes */
+    color: white;
+}
+
+.dark-mode tr:nth-child(odd) {
+    background-color: #444; /* Fond foncé pour les lignes impaires */
+    color: white;
+}
+
+.dark-mode tr:nth-child(even) {
+    background-color: #555; /* Fond légèrement plus clair pour les lignes paires */
+    color: white;
+}

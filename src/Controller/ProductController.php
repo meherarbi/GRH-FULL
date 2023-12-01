@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Product;
+use App\Repository\TimeSheetRepository;
 use App\Service\FileUploader;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -70,14 +71,27 @@ function update(Request $request, Product $product): JsonResponse
     return $this->json($product);
 }
 
-#[Route('/products/{id}', name:'delete_product', methods:['Delete'])]
-function delete(Product $product, EntityManagerInterface $entityManager): JsonResponse
-    {
+#[Route('/products/{id}', name:'delete_product', methods:['DELETE'])]
+public function delete(Product $product, EntityManagerInterface $entityManager, TimeSheetRepository $timeSheetRepository): JsonResponse {
+    // Récupérer toutes les feuilles de temps associées à ce produit
+    $timeSheets = $timeSheetRepository->findBy(['product' => $product]);
+
+    // Définir le produit de chaque feuille de temps à NULL
+    foreach ($timeSheets as $timeSheet) {
+        $timeSheet->setProduct(null);
+        $entityManager->persist($timeSheet);
+    }
+
+    // Supprimer le produit
     $entityManager->remove($product);
     $entityManager->flush();
 
+    $timeSheetRepository->deleteTimeSheetsWithNullProduct();
+
     return new JsonResponse(null, Response::HTTP_NO_CONTENT);
 }
+
+
 
 
 }

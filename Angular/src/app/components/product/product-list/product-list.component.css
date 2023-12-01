@@ -1,15 +1,103 @@
+
+
+
+
+
+
+
+
+
+
+th {
+  background-color: #009879;
+  color: #ffffff;
+  text-transform: uppercase;
+}
+
+
+
+
+tr:last-of-type {
+  border-bottom: 2px solid #009879;
+}
+
+a,button {
+  background-color: #009879;
+  color: white;
+  border: none;
+  padding: 7px;
+  margin-right: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  min-width: 100px; /* Ajoutez une largeur minimale */
+  text-align: center; /* Assurez-vous que le texte est centré */
+}
+.header-container {
+  display: flex;
+  align-items: center;
+}
+
+h1 {
+  margin-right: 78%; /* Adjust as needed */
+}
+
+
+/* style pagination */
+
+button:hover {
+  background-color: #007f66;
+}
+
+.pagination-container {
+  display: flex;        /* Utiliser Flexbox */
+  justify-content: center; /* Centrer horizontalement */
+  align-items: center;     /* Centrer verticalement (si nécessaire) */
+  margin-top: 20px;     /* Garder l'espace au-dessus */
+  margin-bottom: 20px;  /* Ajouter de l'espace en dessous si nécessaire */
+}
+
+
+.pagination li {
+  display: inline-block; /* Afficher les éléments de liste inline */
+  margin-right: 5px; /* Ajouter de l'espace entre les boutons de pagination */
+}
+
+.pagination li a {
+  cursor: pointer; /* Changer le curseur en pointer au survol */
+  padding: 5px 10px; /* Ajouter du padding pour une meilleure visibilité */
+  border: 1px solid #ddd; /* Ajouter une bordure */
+  border-radius: 5px; /* Arrondir les coins */
+}
+
+.pagination li.disabled a {
+  cursor: not-allowed; /* Changer le curseur en not-allowed pour les éléments désactivés */
+  color: #ccc; /* Griser les éléments désactivés */
+}
+
+.pagination li a:hover {
+  background-color: #eee; /* Changer la couleur de fond au survol */
+}
+
+h2 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 16px;
+}
+
 table {
-  margin-top: 1rem;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
 }
 
 th {
+  font-weight: bold;
+  text-align: left;
   text-align: center;
 }
 
-td {
-  vertical-align: middle;
-}
-
-.btn-sm {
-  margin-right: 0.5rem;
-}

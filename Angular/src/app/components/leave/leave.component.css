@@ -1,37 +1,95 @@
-.leave-form {
-    background-color: #f5f5f5;
-    border: 1px solid #ccc;
-    padding: 20px;
-    margin-bottom: 20px;
-  }
-  
-  .leave-form label {
-    display: block;
-    margin-bottom: 10px;
-  }
-  
-  .leave-form input[type="text"],
-  .leave-form textarea {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-    margin-bottom: 20px;
-    font-size: 16px;
-  }
-  
-  .leave-form button[type="submit"] {
-    background-color: #4CAF50;
-    color: white;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-  }
-  
-  .leave-form button[type="submit"]:hover {
-    background-color: #45a049;
-  }
-  
+
+
+
+
+
+
+
+
+
+
+th {
+  background-color: #009879;
+  color: #ffffff;
+  text-transform: uppercase;
+}
+
+
+
+
+tr:last-of-type {
+  border-bottom: 2px solid #009879;
+}
+
+button {
+  background-color: #009879;
+  color: white;
+  border: none;
+  padding: 7px;
+  margin-right: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  min-width: 80px; /* Ajoutez une largeur minimale */
+  text-align: center; /* Assurez-vous que le texte est centré */
+}
+
+
+/* style pagination */
+
+button:hover {
+  background-color: #007f66;
+}
+
+.pagination-container {
+  display: flex;        /* Utiliser Flexbox */
+  justify-content: center; /* Centrer horizontalement */
+  align-items: center;     /* Centrer verticalement (si nécessaire) */
+  margin-top: 20px;     /* Garder l'espace au-dessus */
+  margin-bottom: 20px;  /* Ajouter de l'espace en dessous si nécessaire */
+}
+
+
+.pagination li {
+  display: inline-block; /* Afficher les éléments de liste inline */
+  margin-right: 5px; /* Ajouter de l'espace entre les boutons de pagination */
+}
+
+.pagination li a {
+  cursor: pointer; /* Changer le curseur en pointer au survol */
+  padding: 5px 10px; /* Ajouter du padding pour une meilleure visibilité */
+  border: 1px solid #ddd; /* Ajouter une bordure */
+  border-radius: 5px; /* Arrondir les coins */
+}
+
+.pagination li.disabled a {
+  cursor: not-allowed; /* Changer le curseur en not-allowed pour les éléments désactivés */
+  color: #ccc; /* Griser les éléments désactivés */
+}
+
+.pagination li a:hover {
+  background-color: #eee; /* Changer la couleur de fond au survol */
+}
+
+h2 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 16px;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+th {
+  font-weight: bold;
+  text-align: left;
+  text-align: center;
+}
+

@@ -1,5 +1,11 @@
 import { Product } from "./product";
 
+export interface PaginatedResponse<T> {
+    data: T[];
+    totalItems: number;
+    currentPage: number;
+}
+
 export interface TimeSheet {
     id?: number;
     date: Date;
