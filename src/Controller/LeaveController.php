@@ -17,10 +17,12 @@ class LeaveController extends AbstractController
 {
 
     private $entityManager;
+    private LeaveRepository $leaveRepository;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager,LeaveRepository $leaveRepository)
     {
         $this->entityManager = $entityManager;
+        $this->leaveRepository = $leaveRepository;
     }
 
     // LeaveController.php
