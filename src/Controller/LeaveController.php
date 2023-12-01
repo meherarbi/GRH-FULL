@@ -2,10 +2,10 @@
 
 namespace App\Controller;
 
-use App\Entity\Leave;
 use App\Repository\LeaveRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,62 +23,75 @@ class LeaveController extends AbstractController
         $this->entityManager = $entityManager;
     }
 
-    #[Route('/leave', name:'get_leave')]
-    public function getLeave(Request $request): JsonResponse {
-        // Récupérer l'utilisateur connecté
+    // LeaveController.php
+
+    #[Route('/leave', name: 'get_leave')]
+    public function getLeave(Request $request, LeaveRepository $leaveRepository): JsonResponse
+    {
         $user = $this->getUser();
-    
-        // Vérifier si l'utilisateur est connecté
         if (!$user) {
             return new JsonResponse(['error' => 'User not authenticated'], Response::HTTP_UNAUTHORIZED);
         }
-    
-        // Vérifier si l'utilisateur est un administrateur
-        if (in_array('ROLE_ADMIN', $user->getRoles())) {
-            // L'utilisateur est administrateur, récupérer toutes les demandes de congé
-            $leaves = $this->entityManager->getRepository(Leave::class)->findAll();
-        } else {
-            // Utilisateur non-administrateur, récupérer seulement ses demandes de congé
-            $leaves = $this->entityManager->getRepository(Leave::class)
-                        ->findBy(['user' => $user]);
-        }
-    
-        // Ajouter la pagination si nécessaire
+
         $page = (int) $request->query->get('page', 1);
-        $limit = (int) $request->query->get('limit', 500);
-        // Appliquer la pagination aux données récupérées si nécessaire
-        
-    
-        $data = [
-            'leave' => $leaves, // Utiliser la variable $leaves
+        $limit = (int) $request->query->get('limit', 10);
+
+        $queryBuilder = $leaveRepository->createQueryBuilder('l');
+        if (!in_array('ROLE_ADMIN', $user->getRoles())) {
+            $queryBuilder->where('l.user = :user')->setParameter('user', $user);
+        }
+
+        $paginator = new Paginator($queryBuilder->getQuery(), $fetchJoinCollection = true);
+        $paginator->getQuery()
+            ->setFirstResult($limit * ($page - 1))
+            ->setMaxResults($limit);
+
+        $leaves = [];
+        foreach ($paginator as $leave) {
+            $leaves[] = [
+                'id' => $leave->getId(),
+                'startDate' => $leave->getStartDate()->format('Y-m-d'),
+                'endDate' => $leave->getEndDate()->format('Y-m-d'),
+                'type' => $leave->getType(),
+                'comment' => $leave->getComment(),
+                'user' => [
+                    'id' => $leave->getUser()->getId(),
+                    'email' => $leave->getUser()->getEmail(),
+                    'firstName' => $leave->getUser()->getFirstName(),
+                    'lastName' => $leave->getUser()->getLastName(),
+                    
+                    // autres propriétés de l'utilisateur si nécessaire
+                ],
+            ];
+        }
+
+        return $this->json([
+            'leaves' => $leaves,
             'page' => $page,
             'limit' => $limit,
-        ];
-    
-        return $this->json($data);
+            'total' => count($paginator),
+        ]);
     }
-    
-    
+
     #[Route('/create', name: 'create_leave')]
-    public function create(Request $request, LeaveRepository $leaveRepository): JsonResponse {
+    public function create(Request $request, LeaveRepository $leaveRepository): JsonResponse
+    {
         $user = $this->getUser(); // Récupérer l'utilisateur connecté
-    
+
         // Vérifier si l'utilisateur est connecté
         if (!$user) {
             return new JsonResponse(['error' => 'User not authenticated'], Response::HTTP_UNAUTHORIZED);
         }
 
-        
-    
         $requestData = json_decode($request->getContent(), true);
-        
+
         $startDate = new \DateTime($requestData['startDate']);
         $endDate = new \DateTime($requestData['endDate']);
         $type = $requestData['type'];
         $comment = $requestData['comment'];
-        
+
         $leave = $leaveRepository->createLeave($user, $startDate, $endDate, $type, $comment);
-        
+
         $response = new JsonResponse([
             'id' => $leave->getId(),
             'startDate' => $leave->getStartDate()->format('Y-m-d'),
@@ -87,18 +100,17 @@ class LeaveController extends AbstractController
             'comment' => $leave->getComment(),
             'user' => [
                 'id' => $user->getId(),
-                'firstName' => $user->getFirstName(), 
+                'firstName' => $user->getFirstName(),
                 'lastName' => $user->getLastName(),
                 'email' => $user->getEmail(),
                 'roles' => $user->getRoles(),
             ],
         ]);
-        
+
         $response->setEncodingOptions(JSON_UNESCAPED_UNICODE);
-        
+
         return $response;
     }
-    
 
     #[Route('/leave/{id}', name: 'update_leave', methods: ['PUT'])]
     public function update(int $id, Request $request, LeaveRepository $leaveRepository, UserRepository $userRepository): JsonResponse
@@ -140,7 +152,7 @@ class LeaveController extends AbstractController
     public function delete(string $id, LeaveRepository $leaveRepository): JsonResponse
     {
         $idInt = (int) $id; // Convertir en entier
-    $leave = $leaveRepository->find($idInt);
+        $leave = $leaveRepository->find($idInt);
 
         if (!$leave) {
             return new JsonResponse(['error' => 'Leave not found'], Response::HTTP_NOT_FOUND);

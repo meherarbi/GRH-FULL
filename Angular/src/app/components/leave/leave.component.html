@@ -10,27 +10,34 @@
       <th>Actions</th>
     </tr>
   </thead>
-  <tbody class="dark-mode">
-    <tr *ngFor="let leave of leaves">
-      <td>{{ leave.id }}</td>
-      <td>{{ leave.startDate | date }}</td>
-      <td>{{ leave.endDate | date }}</td>
-      <td>{{ leave.type }}</td>
-      <td>{{ leave.comment }}</td>
-      <td>{{ leave.userDetails?.firstName }} {{ leave.userDetails?.lastName }}</td>
-      <td>
-        <!-- Boutons ou liens pour éditer/supprimer -->
-        
-        <button (click)="confirmDelete(leave.id)">Delete</button>
+  <!-- Dans leave.component.html -->
+<tbody class="dark-mode">
+  <tr *ngFor="let leave of leaves">
+    <td>{{ leave.id }}</td>
+    <td>{{ leave.startDate | date }}</td>
+    <td>{{ leave.endDate | date }}</td>
+    <td>{{ leave.type }}</td>
+    <td>{{ leave.comment }}</td>
+    <td>{{ leave.user.firstName }} {{ leave.user.lastName }}</td>
+    <td>
+      <!-- Boutons ou liens pour éditer/supprimer -->
+      <button (click)="confirmDelete(leave.id)">Delete</button>
     </td>
-    </tr>
-    <tr *ngIf="leaves.length === 0">
-      <td colspan="6">No leaves found.</td>
-    </tr>
+  </tr>
+  <tr *ngIf="leaves.length === 0">
+    <td colspan="7">No leaves found.</td>
+  </tr>
+</tbody>
 
-    
-
-  </tbody>
 </table>
+<!-- Après la fermeture de la balise </table> -->
+<!-- Pagination dans leave.component.html -->
+<div class="pagination-container">
+  <button (click)="loadLeaves(currentPage - 1)" [disabled]="currentPage === 1">Previous</button>
+  <!-- Ajoutez des boutons pour les numéros de page ici si vous le souhaitez -->
+  <button (click)="loadLeaves(currentPage + 1)" [disabled]="currentPage === totalItems / itemsPerPage">Next</button>
+</div>
+
+
 
 

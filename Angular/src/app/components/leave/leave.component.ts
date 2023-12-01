@@ -10,9 +10,16 @@ import { Leave } from 'src/app/Model/leave';
 })
 export class LeaveComponent {
   leaves: any;
+// Dans votre classe LeaveComponent
+currentPage = 1;
+totalItems = 0;
+itemsPerPage = 10;
 
   constructor(private leaveService: LeaveService , private UserService: UserService) { }
-
+  ngOnInit(): void {
+    this.loadLeaves(this.currentPage);
+  }
+  
 
 
   confirmDelete(id: number): void {
@@ -35,29 +42,34 @@ export class LeaveComponent {
     );
   }
 
-  ngOnInit(): void {
-    this.leaveService.getLeaves().subscribe(
-      (response: any) => {
-        this.leaves = response.leave;
-        console.log(this.leaves); // Pour inspecter les données reçues
-  
-        this.leaves.forEach((leave: any) => {
-          if (leave.user) {
-            this.UserService.getUserByUrl(leave.user).subscribe(
-              (userDetails) => {
-                leave.userDetails = userDetails; // Stockez les détails de l'utilisateur dans l'objet leave
-              },
-              (error) => {
-                console.error('Erreur lors de la récupération des détails de lutilisateur', error);
-              }
-            );
-          }
-        });
-      },
-      (error: any) => {
-        console.error('Erreur lors de la récupération des congés', error);
-      }
-    );
-  }
+ // Dans LeaveComponent
+
+loadLeaves(page: number = this.currentPage): void {
+  this.leaveService.getLeaves(page, this.itemsPerPage).subscribe(data => {
+    if (data && Array.isArray(data.leaves)) {
+      this.leaves = data.leaves;
+      this.totalItems = data.total;
+      this.currentPage = page;
+
+      this.leaves.forEach((leave: any) => {
+        if (leave.user) {
+          this.UserService.getUserByUrl(leave.user).subscribe(
+            (userDetails) => {
+              leave.userDetails = userDetails;
+            },
+            (error) => {
+              console.error('Erreur lors de la récupération des détails de lutilisateur', error);
+            }
+          );
+        }
+      });
+    } else {
+      console.error('Invalid data format:', data);
+    }
+  }, error => {
+    console.error('Error loading leaves:', error);
+  });
+}
+
   
 }

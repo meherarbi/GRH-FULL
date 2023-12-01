@@ -12,7 +12,8 @@ export class LeaveService {
 
   constructor(private http: HttpClient) { }
 
-   getLeaves(page: number = 1, limit: number = 500): Observable<any> {
+  
+  getLeaves(page: number = 1, limit: number = 10): Observable<any> {
     const url = `${this.baseUrl}/leave?page=${page}&limit=${limit}`;
     return this.http.get<any>(url);
   }
