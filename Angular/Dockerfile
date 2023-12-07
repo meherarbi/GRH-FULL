@@ -8,6 +8,7 @@ RUN npm run build || cat /tmp/ng-iAV4NN/angular-errors.log
 
 # Étape de production
 FROM nginx:alpine
+COPY default.conf /etc/nginx/conf.d/default.conf
 COPY --from=build-stage /app/dist/angular /usr/share/nginx/html
 
 # Exposez le port 80

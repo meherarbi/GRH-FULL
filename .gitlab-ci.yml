@@ -1,0 +1,73 @@
+stages:
+  - build
+  - test
+  - deploy
+
+variables:
+  MYSQL_DATABASE: grh
+  MYSQL_USER: meher
+  MYSQL_PASSWORD: "meher"
+
+services:
+  - mysql:latest
+
+build_angular:
+  stage: build
+  image: node:latest
+  script:
+    - cd Angular
+    - npm install
+    - npm run build
+  artifacts:
+    paths:
+      - Angular/dist/angular/
+
+build_symfony:
+  stage: build
+  image: php:latest
+  script:
+    - composer install --working-dir=./
+    - # Autres commandes de construction Symfony
+  artifacts:
+    paths:
+      - .
+
+test_angular:
+  stage: test
+  image: node:latest
+  script:
+    - cd Angular
+    - npm run test
+
+test_symfony:
+  stage: test
+  image: php:latest
+  services:
+    - mysql:latest
+  script:
+    - # Commandes pour exécuter les tests Symfony
+
+deploy:
+  stage: deploy
+  image: python:latest
+  before_script:
+    - mkdir -p ~/.ssh
+    - echo "$SSH_PRIVATE_KEY" | base64 --decode > ~/.ssh/id_rsa
+    - chmod 700 ~/.ssh/id_rsa
+    - eval $(ssh-agent -s)
+    - ssh-add ~/.ssh/id_rsa
+    - ssh-keyscan -H 13.49.78.245 >> ~/.ssh/known_hosts
+  script:
+    - pip install awscli
+    - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+    - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+    - aws configure set default.region $AWS_DEFAULT_REGION
+    - scp -i /chemin/vers/votre-cle.pem -r Angular/dist/angular/ ec2-user@13.49.78.245:/var/www/myapp
+    - ssh -i /chemin/vers/votre-cle.pem ec2-user@13.49.78.245 'cd /var/www/myapp && npm install && npm start'
+    - ssh -i /chemin/vers/votre-cle.pem ec2-user@13.49.78.245 'mysql -u root -p"$meher" -e "CREATE DATABASE IF NOT EXISTS $grh;"'
+    - scp -i /chemin/vers/votre-cle.pem -r . ec2-user@13.49.78.245:/var/www/symfony --exclude Angular
+    - ssh -i /chemin/vers/votre-cle.pem ec2-user@13.49.78.245 'cd /var/www/symfony && composer install --no-dev --optimize-autoloader'
+    - ssh -i /chemin/vers/votre-cle.pem ec2-user@13.49.78.245 'cd /var/www/symfony && bin/console doctrine:migrations:migrate --no-interaction'
+    - ssh -i /chemin/vers/votre-cle.pem ec2-user@13.49.78.245 'cd /var/www/symfony && bin/console cache:clear --env=prod'
+  only:
+    - main
