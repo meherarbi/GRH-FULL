@@ -26,7 +26,10 @@ build_symfony:
   stage: build
   image: php:latest
   script:
-    - composer install 
+    - apt-get update -yqq
+    - apt-get install -yqq git unzip
+    - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+    - composer install --working-dir=./
     
   artifacts:
     paths:
