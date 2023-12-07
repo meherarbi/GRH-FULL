@@ -13,7 +13,7 @@ services:
 
 build_angular:
   stage: build
-  image: node:latest
+  image: node:18
   script:
     - cd Angular
     - npm install --legacy-peer-deps
@@ -37,7 +37,7 @@ build_symfony:
 
 test_angular:
   stage: test
-  image: node:latest
+  image: node:18
   script:
     - cd Angular
     - npm run test
