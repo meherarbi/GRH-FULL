@@ -67,12 +67,12 @@ deploy:
     - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
     - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
     - aws configure set default.region $AWS_DEFAULT_REGION
-    - scp -i /chemin/vers/votre-cle.pem -r Angular/dist/angular/ ec2-user@13.49.78.245:/var/www/myapp
-    - ssh -i /chemin/vers/votre-cle.pem ec2-user@13.49.78.245 'cd /var/www/myapp && npm install && npm start'
-    - ssh -i /chemin/vers/votre-cle.pem ec2-user@13.49.78.245 'mysql -u root -p"$meher" -e "CREATE DATABASE IF NOT EXISTS $grh;"'
-    - scp -i /chemin/vers/votre-cle.pem -r . ec2-user@13.49.78.245:/var/www/symfony --exclude Angular
-    - ssh -i /chemin/vers/votre-cle.pem ec2-user@13.49.78.245 'cd /var/www/symfony && composer install --no-dev --optimize-autoloader'
-    - ssh -i /chemin/vers/votre-cle.pem ec2-user@13.49.78.245 'cd /var/www/symfony && bin/console doctrine:migrations:migrate --no-interaction'
-    - ssh -i /chemin/vers/votre-cle.pem ec2-user@13.49.78.245 'cd /var/www/symfony && bin/console cache:clear --env=prod'
+    - scp -i ~/.ssh/id_rsa -r Angular/ ec2-user@13.49.78.245:/var/www/myapp
+    - ssh -i ~/.ssh/id_rsa ec2-user@13.49.78.245 'cd /var/www/myapp && npm install && npm start'
+    - ssh -i ~/.ssh/id_rsa ec2-user@13.49.78.245 'mysql -u root -p"$meher" -e "CREATE DATABASE IF NOT EXISTS $grh;"'
+    - scp -i ~/.ssh/id_rsa -r . ec2-user@13.49.78.245:/var/www/symfony --exclude Angular
+    - ssh -i ~/.ssh/id_rsa ec2-user@13.49.78.245 'cd /var/www/symfony && composer install --no-dev --optimize-autoloader'
+    - ssh -i ~/.ssh/id_rsa ec2-user@13.49.78.245 'cd /var/www/symfony && bin/console doctrine:migrations:migrate --no-interaction'
+    - ssh -i ~/.ssh/id_rsa ec2-user@13.49.78.245 'cd /var/www/symfony && bin/console cache:clear --env=prod'
   only:
     - main
