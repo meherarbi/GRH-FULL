@@ -45,7 +45,7 @@ test_symfony:
   services:
     - mysql:latest
   script:
-    - # Commandes pour exécuter les tests Symfony
+    - # exécuter les tests Symfony
 
 deploy:
   stage: deploy
