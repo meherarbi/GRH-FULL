@@ -39,9 +39,9 @@ test_angular:
   stage: test
   image: node:18
   script:
-    - npm install -g @angular/cli
+    - npm install -g @angular/cli --legacy-peer-deps
     - cd Angular
-    - npm install
+    - npm install --legacy-peer-deps
     - ng test
 
 test_symfony:
