@@ -39,8 +39,10 @@ test_angular:
   stage: test
   image: node:18
   script:
+    - npm install -g @angular/cli
     - cd Angular
-    - npm run test
+    - npm install
+    - ng test
 
 test_symfony:
   stage: test
