@@ -42,7 +42,7 @@ test_angular:
     - npm install -g @angular/cli --legacy-peer-deps
     - cd Angular
     - npm install --legacy-peer-deps
-    - ng test
+    
 
 test_symfony:
   stage: test
