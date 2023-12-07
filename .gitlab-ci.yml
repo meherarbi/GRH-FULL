@@ -26,7 +26,7 @@ build_symfony:
   stage: build
   image: php:latest
   script:
-    - composer install --working-dir=./
+    - composer install 
     
   artifacts:
     paths:
