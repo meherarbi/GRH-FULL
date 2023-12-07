@@ -63,15 +63,17 @@ deploy:
     - ssh-keyscan -H 13.49.78.245 >> ~/.ssh/known_hosts
 
   script:
-   - pip install awscli
-   - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
-   - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
-   - aws configure set default.region $AWS_DEFAULT_REGION
-   - scp -i ~/.ssh/id_rsa -r Angular/dist/ ec2-user@13.49.78.245:/var/www/myapp
-   - ssh -i ~/.ssh/id_rsa ec2-user@13.49.78.245 "mysql -u meher -p'meher' -e 'CREATE DATABASE IF NOT EXISTS grh;'"
-   - scp -i ~/.ssh/id_rsa -r . ec2-user@13.49.78.245:/var/www/symfony --exclude Angular
-   - ssh -i ~/.ssh/id_rsa ec2-user@13.49.78.245 'cd /var/www/symfony && composer install --no-dev --optimize-autoloader'
-   - ssh -i ~/.ssh/id_rsa ec2-user@13.49.78.245 'cd /var/www/symfony && bin/console doctrine:migrations:migrate --no-interaction'
-   - ssh -i ~/.ssh/id_rsa ec2-user@13.49.78.245 'cd /var/www/symfony && bin/console cache:clear --env=prod'
+    - pip install awscli
+    - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+    - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+    - aws configure set default.region $AWS_DEFAULT_REGION
+    - scp -i ~/.ssh/id_rsa -r Angular/dist/ ec2-user@13.49.78.245:/var/www/myapp
+    - ssh -i ~/.ssh/id_rsa ec2-user@13.49.78.245 "mysql -u meher -p'meher' -e 'CREATE DATABASE IF NOT EXISTS grh;'"
+    - ssh -i ~/.ssh/id_rsa ec2-user@13.49.78.245 "mkdir -p /var/www/symfony"
+    - rsync -av --exclude='Angular' -e "ssh -i ~/.ssh/id_rsa" . ec2-user@13.49.78.245:/var/www/symfony/
+    - ssh -i ~/.ssh/id_rsa ec2-user@13.49.78.245 'cd /var/www/symfony && composer install --no-dev --optimize-autoloader'
+    - ssh -i ~/.ssh/id_rsa ec2-user@13.49.78.245 'cd /var/www/symfony && bin/console doctrine:migrations:migrate --no-interaction'
+    - ssh -i ~/.ssh/id_rsa ec2-user@13.49.78.245 'cd /var/www/symfony && bin/console cache:clear --env=prod'
   only:
     - main
+
