@@ -37,7 +37,7 @@ build_symfony:
 
 test_angular:
   stage: test
-  image: node:18
+  image: node:latest
   script:
     - cd Angular
     - npm run test
