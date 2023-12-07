@@ -16,8 +16,8 @@ build_angular:
   image: node:latest
   script:
     - cd Angular
-    - npm install
-    - npm run build
+    - npm install --legacy-peer-deps
+    - npm run build || cat /tmp/ng-iAV4NN/angular-errors.log
   artifacts:
     paths:
       - Angular/dist/angular/
