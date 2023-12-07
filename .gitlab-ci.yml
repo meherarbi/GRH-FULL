@@ -27,7 +27,7 @@ build_symfony:
   image: php:latest
   script:
     - composer install --working-dir=./
-    - # Autres commandes de construction Symfony
+    # Autres commandes de construction Symfony
   artifacts:
     paths:
       - .
