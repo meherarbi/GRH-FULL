@@ -30,7 +30,6 @@ build_symfony:
     - apt-get install -yqq git unzip
     - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
     - composer install --working-dir=./
-
   artifacts:
     paths:
       - .
@@ -68,9 +67,9 @@ deploy:
     - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
     - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
     - aws configure set default.region $AWS_DEFAULT_REGION
-    - scp -i ~/.ssh/id_rsa -r Angular/dist/ ec2-user@13.49.78.245:/var/www/myapp
+    - scp -i ~/.ssh/id_rsa -r Angular/dist/angular/ ec2-user@13.49.78.245:/var/www/myapp
     - ssh -i ~/.ssh/id_rsa ec2-user@13.49.78.245 "mysql -u meher -p'meher' -e 'CREATE DATABASE IF NOT EXISTS grh;'"
-    - rsync -av --ignore-errors --exclude='Angular' --exclude='node_modules/' --exclude='vendor/' --exclude='var/log/' -e "ssh -i ~/.ssh/id_rsa" . ec2-user@13.49.78.245:/var/www/symfony/
+    - rsync -av --ignore-errors --exclude='Angular' --exclude='node_modules/' --exclude='vendor/' --exclude='var/cache/' --exclude='var/log/' -e "ssh -i ~/.ssh/id_rsa" . ec2-user@13.49.78.245:/var/www/symfony/
     - ssh -i ~/.ssh/id_rsa ec2-user@13.49.78.245 'cd /var/www/symfony && composer install --no-dev --optimize-autoloader'
     - ssh -i ~/.ssh/id_rsa ec2-user@13.49.78.245 'cd /var/www/symfony && bin/console doctrine:migrations:migrate --no-interaction'
     - ssh -i ~/.ssh/id_rsa ec2-user@13.49.78.245 'cd /var/www/symfony && bin/console cache:clear --env=prod'
