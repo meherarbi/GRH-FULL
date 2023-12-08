@@ -19,7 +19,7 @@ class LeaveController extends AbstractController
     private $entityManager;
     private LeaveRepository $leaveRepository;
 
-    public function __construct(EntityManagerInterface $entityManager,LeaveRepository $leaveRepository)
+    public function __construct(EntityManagerInterface $entityManager, LeaveRepository $leaveRepository)
     {
         $this->entityManager = $entityManager;
         $this->leaveRepository = $leaveRepository;
@@ -42,6 +42,7 @@ class LeaveController extends AbstractController
         if (!in_array('ROLE_ADMIN', $user->getRoles())) {
             $queryBuilder->where('l.user = :user')->setParameter('user', $user);
         }
+        $queryBuilder->orderBy('l.id', 'DESC'); // Trie les résultats par date en ordre décroissant
 
         $paginator = new Paginator($queryBuilder->getQuery(), $fetchJoinCollection = true);
         $paginator->getQuery()
@@ -61,7 +62,7 @@ class LeaveController extends AbstractController
                     'email' => $leave->getUser()->getEmail(),
                     'firstName' => $leave->getUser()->getFirstName(),
                     'lastName' => $leave->getUser()->getLastName(),
-                    
+
                     // autres propriétés de l'utilisateur si nécessaire
                 ],
             ];

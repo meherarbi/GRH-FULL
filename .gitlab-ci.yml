@@ -70,7 +70,7 @@ deploy:
     - aws configure set default.region $AWS_DEFAULT_REGION
     - scp -i ~/.ssh/id_rsa -r Angular/dist/ ec2-user@13.49.78.245:/var/www/myapp
     - ssh -i ~/.ssh/id_rsa ec2-user@13.49.78.245 "mysql -u meher -p'meher' -e 'CREATE DATABASE IF NOT EXISTS grh;'"
-    - rsync -av --ignore-errors --exclude='Angular' --exclude='vendor/' --exclude='node_modules/' -e "ssh -i ~/.ssh/id_rsa" . ec2-user@13.49.78.245:/var/www/symfony/
+    - rsync -av --ignore-errors --exclude='Angular' --exclude='node_modules/' --exclude='vendor/' --exclude='var/log/' -e "ssh -i ~/.ssh/id_rsa" . ec2-user@13.49.78.245:/var/www/symfony/
     - ssh -i ~/.ssh/id_rsa ec2-user@13.49.78.245 'cd /var/www/symfony && composer install --no-dev --optimize-autoloader'
     - ssh -i ~/.ssh/id_rsa ec2-user@13.49.78.245 'cd /var/www/symfony && bin/console doctrine:migrations:migrate --no-interaction'
     - ssh -i ~/.ssh/id_rsa ec2-user@13.49.78.245 'cd /var/www/symfony && bin/console cache:clear --env=prod'
